@@ -1,11 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "@/core/services/store";
-import ApiService from "@/core/services/api.service";
-import MockService from "@/core/mock/mock.service";
-import { VERIFY_AUTH } from "@/core/services/store/auth.module";
-import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
+import store from "@/core/---metronic/services/store";
+import ApiService from "@/core/---metronic/services/api.service";
+import MockService from "@/core/---metronic/mock/mock.service";
+import { VERIFY_AUTH } from "@/core/---metronic/services/store/auth.module";
+import { RESET_LAYOUT_CONFIG } from "@/core/---metronic/services/store/config.module";
 
 Vue.config.productionTip = false;
 
@@ -18,18 +18,18 @@ import ClipboardJS from "clipboard";
 window.ClipboardJS = ClipboardJS;
 
 // Vue 3rd party plugins
-import i18n from "@/core/plugins/vue-i18n";
-import vuetify from "@/core/plugins/vuetify";
-import "@/core/plugins/portal-vue";
-import "@/core/plugins/bootstrap-vue";
-import "@/core/plugins/perfect-scrollbar";
-import "@/core/plugins/highlight-js";
-import "@/core/plugins/inline-svg";
-import "@/core/plugins/apexcharts";
-import "@/core/plugins/treeselect";
-import "@/core/plugins/metronic";
+import i18n from "@/core/---metronic/plugins/vue-i18n";
+import vuetify from "@/core/---metronic/plugins/vuetify";
+import "@/core/---metronic/plugins/portal-vue";
+import "@/core/---metronic/plugins/bootstrap-vue";
+import "@/core/---metronic/plugins/perfect-scrollbar";
+import "@/core/---metronic/plugins/highlight-js";
+import "@/core/---metronic/plugins/inline-svg";
+import "@/core/---metronic/plugins/apexcharts";
+import "@/core/---metronic/plugins/treeselect";
+import "@/core/---metronic/plugins/metronic";
 import "@mdi/font/css/materialdesignicons.css";
-import "@/core/plugins/formvalidation";
+import "@/core/---metronic/plugins/formvalidation";
 
 // API service init
 ApiService.init();
