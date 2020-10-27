@@ -1,200 +1,48 @@
 <template>
-  <ul class="menu-nav">
-    <router-link
-      to="/dashboard"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
+  <ul v-if="menu.length" class="menu-nav">
+    <template v-for="(item, i) in menu">
       <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
+        v-if="item.hasOwnProperty('items') && item.items.length && item.section"
+        class="menu-section"
+        :key="`section_${i}`"
       >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-architecture-and-city"></i>
-          <span class="menu-text">Dashboard</span>
-        </a>
+        <h4 class="menu-text">{{ item.section }}</h4>
+        <i class="menu-icon flaticon-more-v2"></i>
       </li>
-    </router-link>
-
-    <router-link
-      to="/builder"
-      v-slot="{ href, navigate, isActive, isExactActive }"
-    >
-      <li
-        aria-haspopup="true"
-        data-menu-toggle="hover"
-        class="menu-item"
-        :class="[
-          isActive && 'menu-item-active',
-          isExactActive && 'menu-item-active'
-        ]"
+      <KTMenuSubgroup
+        v-if="item.hasOwnProperty('items')"
+        :key="i"
+        :icon="item.icon"
+        :items="item.items"
+        :activeChildren="item.activeChildren"
+        >{{ item.text }}</KTMenuSubgroup
       >
-        <a :href="href" class="menu-link" @click="navigate">
-          <i class="menu-icon flaticon2-expand"></i>
-          <span class="menu-text">Layout Builder</span>
-        </a>
-      </li>
-    </router-link>
-
-    <li class="menu-section">
-      <h4 class="menu-text">Components</h4>
-      <i class="menu-icon flaticon-more-v2"></i>
-    </li>
-
-    <li
-      aria-haspopup="true"
-      data-menu-toggle="hover"
-      class="menu-item menu-item-submenu"
-      v-bind:class="{ 'menu-item-open': hasActiveChildren('/vue-bootstrap') }"
-    >
-      <a href="#" class="menu-link menu-toggle">
-        <i class="menu-icon flaticon2-digital-marketing"></i>
-        <span class="menu-text">Vue Bootstrap</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="menu-submenu">
-        <span class="menu-arrow"></span>
-        <ul class="menu-subnav">
-          <li aria-haspopup="true" class="menu-item menu-item-parent">
-            <span class="menu-link">
-              <span class="menu-text">Vue Bootstrap</span>
-            </span>
-          </li>
-
-          <router-link
-            to="/vue-bootstrap/alert"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active'
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text">Alert</span>
-              </a>
-            </li>
-          </router-link>
-
-          <li
-            aria-haspopup="true"
-            data-menu-toggle="hover"
-            class="menu-item menu-item-submenu"
-            v-bind:class="{
-              'menu-item-open': hasActiveChildren('/vue-bootstrap/button')
-            }"
-          >
-            <a href="#" class="menu-link menu-toggle">
-              <i class="menu-bullet menu-bullet-dot">
-                <span></span>
-              </i>
-              <span class="menu-text">Buttons</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="menu-submenu">
-              <span class="menu-arrow"></span>
-              <ul class="menu-subnav">
-                <li aria-haspopup="true" class="menu-item menu-item-parent">
-                  <span class="menu-link">
-                    <span class="menu-text"></span>
-                  </span>
-                </li>
-
-                <router-link
-                  to="/vue-bootstrap/button"
-                  v-slot="{ href, navigate, isActive, isExactActive }"
-                >
-                  <li
-                    aria-haspopup="true"
-                    data-menu-toggle="hover"
-                    class="menu-item"
-                    :class="[
-                      isActive && 'menu-item-active',
-                      isExactActive && 'menu-item-active'
-                    ]"
-                  >
-                    <a :href="href" class="menu-link" @click="navigate">
-                      <i class="menu-bullet menu-bullet-dot">
-                        <span></span>
-                      </i>
-                      <span class="menu-text">Button</span>
-                    </a>
-                  </li>
-                </router-link>
-
-                <router-link
-                  to="/vue-bootstrap/button-group"
-                  v-slot="{ href, navigate, isActive, isExactActive }"
-                >
-                  <li
-                    aria-haspopup="true"
-                    data-menu-toggle="hover"
-                    class="menu-item"
-                    :class="[
-                      isActive && 'menu-item-active',
-                      isExactActive && 'menu-item-active'
-                    ]"
-                  >
-                    <a :href="href" class="menu-link" @click="navigate">
-                      <i class="menu-bullet menu-bullet-dot">
-                        <span></span>
-                      </i>
-                      <span class="menu-text">Button Group</span>
-                    </a>
-                  </li>
-                </router-link>
-
-                <router-link
-                  to="/vue-bootstrap/button-toolbar"
-                  v-slot="{ href, navigate, isActive, isExactActive }"
-                >
-                  <li
-                    aria-haspopup="true"
-                    data-menu-toggle="hover"
-                    class="menu-item"
-                    :class="[
-                      isActive && 'menu-item-active',
-                      isExactActive && 'menu-item-active'
-                    ]"
-                  >
-                    <a :href="href" class="menu-link" @click="navigate">
-                      <i class="menu-bullet menu-bullet-dot">
-                        <span></span>
-                      </i>
-                      <span class="menu-text">Button Toolbar</span>
-                    </a>
-                  </li>
-                </router-link>
-              </ul>
-            </div>
-          </li>
-
-          
-        </ul>
-      </div>
-    </li>
-
+      <KTMenuItem v-else :key="i" :icon="item.icon" :to="item.to">{{
+        item.text
+      }}</KTMenuItem>
+    </template>
   </ul>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import KTMenuSubgroup from "./MenuSubgroup";
+import KTMenuItem from "./MenuItem";
+
 export default {
   name: "KTMenu",
+  components: {
+    KTMenuSubgroup,
+    KTMenuItem
+  },
+  computed: {
+    ...mapGetters("menu", ["menu"])
+  },
+  created() {
+    this.criarMenu();
+  },
   methods: {
-    hasActiveChildren(match) {
-      return this.$route["path"].indexOf(match) !== -1;
-    }
+    ...mapActions("menu", ["criarMenu"])
   }
 };
 </script>

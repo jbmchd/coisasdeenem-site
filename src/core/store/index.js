@@ -4,6 +4,7 @@ import Vuex from "vuex";
 // import auth from "./auth.module";
 import global from "./global";
 import auth from "./auth";
+import menu from "./menu";
 import htmlClass from "./htmlclass.module";
 import config from "./config.module";
 import breadcrumbs from "./breadcrumbs.module";
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   modules: {
     global,
     auth,
+    menu,
     htmlClass,
     config,
     breadcrumbs,
