@@ -30,7 +30,7 @@ module.exports = {
         }
       },
       scss: {
-        prependData: `@import "@/assets/---metronic/sass/vendors/vue/vuetify/variables.scss";`
+        prependData: `@import "@/assets/sass/vendors/vue/vuetify/variables.scss";`
       }
     }
   },
