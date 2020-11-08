@@ -122,7 +122,6 @@
         </div>
         <!--end::Nav-->
         <div class="separator separator-dashed my-7"></div>
-
       </perfect-scrollbar>
       <!--end::Content-->
     </div>
@@ -137,7 +136,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { LOGOUT } from "@/core/store/auth";
+import { SAIR } from "@/core/store/auth";
 import KTLayoutQuickUser from "@/assets/js/layout/extended/quick-user.js";
 import KTOffcanvas from "@/assets/js/components/offcanvas.js";
 
@@ -184,7 +183,7 @@ export default {
   methods: {
     onLogout() {
       this.$store
-        .dispatch(LOGOUT)
+        .dispatch(SAIR)
         .then(() => this.$router.push({ name: "login" }));
     },
     closeOffcanvas() {

@@ -31,4 +31,7 @@ function parse(value, fallback) {
       return value;
   }
 }
-export { config, feature };
+
+const env = { ...config, feature };
+
+export default env;

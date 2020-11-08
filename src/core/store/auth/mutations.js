@@ -1,23 +1,28 @@
-import TokenService from "@/core/services/token.service";
+import TokenService from "@jbmchd-vue/jb-v-global/services/token.service";
 
 // mutation types
 export const PURGE_AUTH = "logOut";
 export const SET_AUTH = "setUser";
 export const SET_PASSWORD = "setPassword";
 export const SET_ERROR = "setError";
+export const SET_EU = "setEu";
 
 export default {
   [SET_ERROR](state, error) {
     state.errors = error;
   },
-  [SET_AUTH](state, user) {
+  [SET_AUTH](state, data) {
     state.isAuthenticated = true;
-    state.user = user;
     state.errors = {};
-    TokenService.saveToken(state.user.token);
+    TokenService.saveToken(data.token.plainTextToken);
   },
-  [SET_PASSWORD](state, password) {
-    state.user.password = password;
+  [SET_EU](state, eu) {
+    state.isAuthenticated = true;
+    state.errors = {};
+    state.user = eu;
+  },
+  [SET_PASSWORD](state, senha) {
+    state.user.senha = senha;
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;

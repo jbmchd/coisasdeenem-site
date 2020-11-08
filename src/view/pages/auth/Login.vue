@@ -117,7 +117,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { LOGIN, LOGOUT } from "@/core/store/auth";
+import { ENTRAR, SAIR } from "@/core/store/auth";
 
 import { validationMixin } from "vuelidate";
 import { email, minLength, required } from "vuelidate/lib/validators";
@@ -171,7 +171,7 @@ export default {
       const password = this.$v.form.password.$model;
 
       // clear existing errors
-      this.$store.dispatch(LOGOUT);
+      this.$store.dispatch(SAIR);
 
       // set spinner to submit button
       const submitButton = this.$refs["kt_login_signin_submit"];
@@ -181,7 +181,7 @@ export default {
       setTimeout(() => {
         // send login request
         this.$store
-          .dispatch(LOGIN, { email, password })
+          .dispatch(ENTRAR, { email, password })
           // go to which page after successfully login
           .then(() => this.$router.push({ name: "dashboard" }));
 

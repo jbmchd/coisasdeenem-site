@@ -1,68 +1,130 @@
-import ApiService from "@/core/services/api.service";
-import TokenService from "@/core/services/token.service";
+import AuthService from "@/core/services/auth.api.service";
+import TokenService from "@jbmchd-vue/jb-v-global/services/token.service";
 import {
   PURGE_AUTH,
   SET_AUTH,
   SET_PASSWORD,
-  SET_ERROR
+  SET_ERROR,
+  SET_EU
 } from "@/core/store/auth/mutations";
 
 // action types
-export const VERIFY_AUTH = "verifyAuth";
-export const LOGIN = "login";
-export const LOGOUT = "logout";
-export const REGISTER = "register";
-export const UPDATE_PASSWORD = "updateUser";
+export const EU = "eu";
+export const ENTRAR = "entrar";
+export const SAIR = "sair";
+export const REGISTRAR = "registrar";
+export const ENVIAR_EMAIL_TROCAR_SENHA = "enviarEmailTrocarSenha";
+export const TROCAR_SENHA = "trocarSenha";
 
 export default {
-  [LOGIN](context, credentials) {
+  [ENTRAR]({ commit, dispatch }, credentials) {
     return new Promise(resolve => {
-      ApiService.post("login", credentials)
+      AuthService.entrar(credentials)
         .then(({ data }) => {
-          // console.log("Here what post returns", data);
-          context.commit(SET_AUTH, data);
+          commit(SET_AUTH, data.dados);
+          dispatch("flashMessage", {
+            type: "success",
+            message: "Login realizado com sucesso"
+          });
           resolve(data);
         })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
+        .then(() => {
+          dispatch([EU]);
+        })
+        .catch(({ data }) => {
+          commit(SET_ERROR, data);
+          dispatch("flashMessage", { type: "error", ...data });
         });
     });
   },
-  [LOGOUT](context) {
-    context.commit(PURGE_AUTH);
-  },
-  [REGISTER](context, credentials) {
+
+  [SAIR]({ dispatch, commit }) {
     return new Promise(resolve => {
-      ApiService.post("login", credentials)
+      let token = TokenService.getToken();
+      if (token) {
+        AuthService.sair(token)
+          .then(({ data }) => {
+            commit(PURGE_AUTH);
+            dispatch("flashMessage", {
+              type: "success",
+              message: "Logout realizado com sucesso"
+            });
+            resolve(data);
+          })
+          .catch(({ data }) => {
+            commit(SET_ERROR, data);
+            dispatch("flashMessage", { type: "error", ...data });
+          })
+          .finally(() => {
+            commit(PURGE_AUTH);
+          });
+      } else {
+        commit(PURGE_AUTH);
+      }
+    });
+  },
+
+  [REGISTRAR]({ dispatch, commit }, credentials) {
+    return new Promise(resolve => {
+      AuthService.registrar(credentials)
         .then(({ data }) => {
-          context.commit(SET_AUTH, data);
+          commit(SET_AUTH, data);
+          dispatch("flashMessage", {
+            type: "success",
+            message: data.mensagens
+          });
           resolve(data);
         })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
+        .catch(({ data }) => {
+          commit(SET_ERROR, data);
+          dispatch("flashMessage", { type: "error", ...data });
         });
     });
   },
-  [VERIFY_AUTH](context) {
-    if (TokenService.getToken()) {
-      ApiService.setHeader();
-      ApiService.get("verify")
+
+  [EU]({ dispatch, commit }) {
+    let token = TokenService.getToken();
+    if (token) {
+      AuthService.setAxiosToken(token);
+      AuthService.eu()
         .then(({ data }) => {
-          context.commit(SET_AUTH, data);
+          commit(SET_EU, data);
         })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
+        .catch(({ data }) => {
+          commit(PURGE_AUTH);
+          commit(SET_ERROR, data);
+          dispatch("flashMessage", { type: "error", ...data });
         });
     } else {
-      context.commit(PURGE_AUTH);
+      commit(PURGE_AUTH);
     }
   },
-  [UPDATE_PASSWORD](context, payload) {
-    const password = payload;
 
-    return ApiService.put("password", password).then(({ data }) => {
-      context.commit(SET_PASSWORD, data);
+  [ENVIAR_EMAIL_TROCAR_SENHA]({ dispatch, commit }, payload) {
+    return AuthService.enviarEmailTrocarSenha(payload).then(({ data }) => {
+      commit(SET_PASSWORD, data);
+      dispatch("flashMessage", { type: "success", message: data.mensagens });
       return data;
     });
+  },
+
+  [TROCAR_SENHA]({ dispatch, commit }, payload) {
+    return AuthService.trocarSenha(payload).then(({ data }) => {
+      commit(SET_PASSWORD, data);
+      dispatch("flashMessage", { type: "success", message: data.mensagens });
+      return data;
+    });
+  },
+
+  flashMessage({ dispatch }, payload) {
+    let title_html = typeof payload.message == "string" ? "title" : "html";
+    let action = payload.type == "error" ? "showError" : "showSuccess";
+    dispatch(
+      `flash_messages/${action}`,
+      { [title_html]: payload.message },
+      {
+        root: true
+      }
+    );
   }
 };

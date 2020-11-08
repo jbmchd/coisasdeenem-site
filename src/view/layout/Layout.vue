@@ -4,7 +4,8 @@
     <KTHeaderMobile></KTHeaderMobile>
     <!-- end:: Header Mobile -->
 
-    <Loader v-if="loaderEnabled" v-bind:logo="loaderLogo"></Loader>
+    <!-- <Loader v-if="loaderEnabled" v-bind:logo="loaderLogo"></Loader> -->
+    <!-- <Loader v-bind="loading" /> -->
 
     <!-- begin::Body -->
     <div class="d-flex flex-row flex-column-fluid page">
@@ -49,11 +50,11 @@ import KTHeader from "@/view/layout/header/Header.vue";
 import KTHeaderMobile from "@/view/layout/header/HeaderMobile.vue";
 import HtmlClass from "@/core/services/htmlclass.service";
 import KTScrollTop from "@/view/layout/extras/ScrollTop";
-import Loader from "@/view/content/Loader.vue";
+// import Loader from "@/view/content/Loader.vue";
 import {
   ADD_BODY_CLASSNAME,
   REMOVE_BODY_CLASSNAME
-} from "@/core/store/htmlclass.module.js";
+} from "@/core/store/core/htmlclass.module.js";
 
 export default {
   name: "Layout",
@@ -62,7 +63,7 @@ export default {
     KTHeader,
     KTHeaderMobile,
     KTScrollTop,
-    Loader
+    // Loader
   },
   beforeMount() {
     // show page loading
@@ -89,16 +90,17 @@ export default {
       "isAuthenticated",
       "breadcrumbs",
       "pageTitle",
-      "layoutConfig"
+      "layoutConfig",
+      // "loading"
     ]),
 
     /**
      * Check if the page loader is enabled
      * @returns {boolean}
      */
-    loaderEnabled() {
-      return !/false/.test(this.layoutConfig("loader.type"));
-    },
+    // loaderEnabled() {
+    //   return !/false/.test(this.layoutConfig("loader.type"));
+    // },
 
     /**
      * Check if container width is fluid
@@ -112,9 +114,9 @@ export default {
      * Page loader logo image using require() function
      * @returns {string}
      */
-    loaderLogo() {
-      return process.env.BASE_URL + this.layoutConfig("loader.logo");
-    },
+    // loaderLogo() {
+    //   return process.env.BASE_URL + this.layoutConfig("loader.logo");
+    // },
 
     /**
      * Check if the left aside menu is enabled

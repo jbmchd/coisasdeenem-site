@@ -1,18 +1,37 @@
 <template>
-  <!-- begin::Page loader -->
-  <div class="page-loader page-loader-logo">
-    <img alt="Logo" :src="logo" width="100" />
-    <div class="spinner" v-bind:class="spinnerClass || 'spinner-primary'"></div>
+  <div class="vld-parent">
+    <loading
+      :active.sync="isLoading"
+      :can-cancel="false"
+      :on-cancel="onCancel"
+      :is-full-page="fullPage"
+    >
+      <slot> <rotate-square2 /> </slot
+    ></loading>
   </div>
-  <!-- end::Page Loader -->
 </template>
 
 <script>
+// Import component
+import Loading from "vue-loading-overlay";
+// Import stylesheet
+import "vue-loading-overlay/dist/vue-loading.css";
+import { RotateSquare2 } from "vue-loading-spinner";
+
 export default {
   name: "Loader",
+  components: {
+    Loading,
+    RotateSquare2
+  },
   props: {
-    logo: String,
-    spinnerClass: String
-  }
+    isLoading: { type: Boolean, default: false },
+    fullPage: { type: Boolean, default: true },
+    canCancel: { type: Boolean, default: false },
+    onCancel: { type: Function, default: v => v }
+  },
+  data() {
+    return {};
+  },
 };
 </script>

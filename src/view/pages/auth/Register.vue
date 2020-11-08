@@ -120,8 +120,8 @@
 
 <script>
 import { mapState } from "vuex";
-import { REGISTER } from "@/core/store/auth";
-import { LOGOUT } from "@/core/store/auth";
+import { REGISTRAR } from "@/core/store/auth";
+import { SAIR } from "@/core/store/auth";
 
 import { validationMixin } from "vuelidate";
 import { email, required, minLength } from "vuelidate/lib/validators";
@@ -181,7 +181,7 @@ export default {
       const password = this.$v.form.password.$model;
 
       // clear existing errors
-      this.$store.dispatch(LOGOUT);
+      this.$store.dispatch(SAIR);
 
       // set spinner to submit button
       const submitButton = this.$refs["kt_login_signup_submit"];
@@ -191,7 +191,7 @@ export default {
       setTimeout(() => {
         // send register request
         this.$store
-          .dispatch(REGISTER, {
+          .dispatch(REGISTRAR, {
             email: email,
             password: password,
             username: username

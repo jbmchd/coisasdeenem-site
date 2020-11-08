@@ -21,7 +21,6 @@
           class="header-menu header-menu-mobile"
           v-bind:class="headerMenuClasses"
         >
-          
           <KTBreadcrumb />
         </div>
       </div>

@@ -78,7 +78,7 @@
                     type="text"
                     name="email"
                     ref="email"
-                    :value="form.email"
+                    v-model="form.email"
                   />
                 </div>
               </div>
@@ -102,9 +102,9 @@
                   <input
                     class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
                     type="password"
-                    name="password"
-                    ref="password"
-                    :value="form.password"
+                    name="senha"
+                    ref="senha"
+                    v-model="form.senha"
                     autocomplete="off"
                   />
                 </div>
@@ -116,7 +116,7 @@
                 >
                   Sign In
                 </button>
-                <button
+                <!-- <button
                   type="button"
                   class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg"
                 >
@@ -125,7 +125,7 @@
                       src="media/svg/social-icons/google.svg"
                     /> </span
                   >Sign in with Google
-                </button>
+                </button> -->
               </div>
             </form>
           </div>
@@ -173,8 +173,8 @@
                   class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
                   type="password"
                   placeholder="Password"
-                  name="password"
-                  ref="rpassword"
+                  name="senha"
+                  ref="rsenha"
                   autocomplete="off"
                 />
               </div>
@@ -182,9 +182,9 @@
                 <input
                   class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6"
                   type="password"
-                  placeholder="Confirm password"
-                  name="cpassword"
-                  ref="cpassword"
+                  placeholder="Confirm senha"
+                  name="csenha"
+                  ref="csenha"
                   autocomplete="off"
                 />
               </div>
@@ -232,7 +232,7 @@
                   Forgotten Password ?
                 </h3>
                 <p class="text-muted font-weight-bold font-size-h4">
-                  Enter your email to reset your password
+                  Enter your email to reset your senha
                 </p>
               </div>
               <div class="form-group">
@@ -292,17 +292,17 @@
 </style>
 
 <script>
-import formValidation from "@/assets/plugins/formvalidation/dist/es6/core/Core";
-
 // FormValidation plugins
-// import "@/core/plugins/formvalidation";
-import Trigger from "@/assets/plugins/formvalidation/dist/es6/plugins/Trigger";
-import Bootstrap from "@/assets/plugins/formvalidation/dist/es6/plugins/Bootstrap";
-import SubmitButton from "@/assets/plugins/formvalidation/dist/es6/plugins/SubmitButton";
+import {
+  formValidation,
+  Trigger,
+  Bootstrap,
+  SubmitButton
+} from "@/core/plugins/formvalidation";
 
 import KTUtil from "@/assets/js/components/util";
 import { mapGetters, mapState } from "vuex";
-import { LOGIN, LOGOUT, REGISTER } from "@/core/store/auth";
+import { ENTRAR, SAIR, REGISTRAR } from "@/core/store/auth";
 import Swal from "sweetalert2";
 
 export default {
@@ -312,8 +312,8 @@ export default {
       state: "signin",
       // Remove this dummy login info
       form: {
-        email: "admin@demo.com",
-        password: "demo"
+        email: "joabemachadodeabreu@gmail.com",
+        senha: "123456"
       }
     };
   },
@@ -339,15 +339,22 @@ export default {
         email: {
           validators: {
             notEmpty: {
-              message: "Username is required"
+              message: "Digite seu email"
+            },
+            emailAddress: {
+              message: "Entre com um email válido"
             }
           }
         },
-        password: {
+        senha: {
           validators: {
             notEmpty: {
-              message: "Password is required"
+              message: "Digite sua senha"
             }
+            // stringLength: {
+            //   min: 6,
+            //   message: "A senha deve conter pelo menos 6 caracteres"
+            // }
           }
         }
       },
@@ -377,23 +384,23 @@ export default {
             }
           }
         },
-        password: {
+        senha: {
           validators: {
             notEmpty: {
               message: "Password is required"
             }
           }
         },
-        cpassword: {
+        csenha: {
           validators: {
             notEmpty: {
-              message: "Confirm password is required"
+              message: "Confirm senha is required"
             },
             identical: {
               compare: function() {
-                return signup_form.querySelector('[name="password"]').value;
+                return signup_form.querySelector('[name="senha"]').value;
               },
-              message: "The password and its confirm are not the same"
+              message: "The senha and its confirm are not the same"
             }
           }
         },
@@ -431,6 +438,11 @@ export default {
         bootstrap: new Bootstrap()
       }
     });
+
+    // const submitButton = this.$refs["kt_login_signin_submit"];
+    // submitButton.click();
+    // console.log('botao', submitButton);
+    // submitButton.classList.add("spinner", "spinner-light", "spinner-right");
   },
   methods: {
     showForm(form) {
@@ -443,87 +455,110 @@ export default {
     },
 
     onSubmitLogin() {
-      this.fv.validate();
-
-      this.fv.on("core.form.valid", () => {
-        var email = this.form.email;
-        var password = this.form.password;
-
-        // clear existing errors
-        this.$store.dispatch(LOGOUT);
-
-        // set spinner to submit button
-        const submitButton = this.$refs["kt_login_signin_submit"];
-        submitButton.classList.add("spinner", "spinner-light", "spinner-right");
-
-        // dummy delay
-        setTimeout(() => {
-          // send login request
-          this.$store
-            .dispatch(LOGIN, { email, password })
-            // go to which page after successfully login
-            .then(() => this.$router.push({ name: "dashboard" }))
-            .catch(() => {});
-
-          submitButton.classList.remove(
-            "spinner",
-            "spinner-light",
-            "spinner-right"
-          );
-        }, 2000);
-      });
-
-      this.fv.on("core.form.invalid", () => {
-        Swal.fire({
-          title: "",
-          text: "Please, provide correct data!",
-          icon: "error",
-          confirmButtonClass: "btn btn-secondary",
-          heightAuto: false
-        });
+      this.fv.validate().then(status => {
+        switch (status) {
+          case "Valid":
+            this.formLoginValid();
+            break;
+          case "Invalid":
+            this.formLoginInvalid();
+            break;
+          case "NotValidated":
+            //
+            break;
+        }
       });
     },
 
     onSubmitRegister() {
-      this.fv1.validate();
-
-      this.fv1.on("core.form.valid", () => {
-        const email = this.$refs.remail.value;
-        const password = this.$refs.rpassword.value;
-
-        // clear existing errors
-        this.$store.dispatch(LOGOUT);
-
-        // set spinner to submit button
-        const submitButton = this.$refs["kt_login_signup_submit"];
-        submitButton.classList.add("spinner", "spinner-light", "spinner-right");
-
-        // dummy delay
-        setTimeout(() => {
-          // send register request
-          this.$store
-            .dispatch(REGISTER, {
-              email: email,
-              password: password
-            })
-            .then(() => this.$router.push({ name: "dashboard" }));
-
-          submitButton.classList.remove(
-            "spinner",
-            "spinner-light",
-            "spinner-right"
-          );
-        }, 2000);
+      this.fv1.validate().then(status => {
+        switch (status) {
+          case "Valid":
+            this.formRegisterValid();
+            break;
+          case "Invalid":
+            this.formRegisterInvalid();
+            break;
+          case "NotValidated":
+            //
+            break;
+        }
       });
+    },
 
-      this.fv1.on("core.form.invalid", () => {
-        Swal.fire({
-          title: "",
-          text: "Please, provide correct data!",
-          icon: "error",
-          confirmButtonClass: "btn btn-secondary",
-          heightAuto: false
+    formRegisterValid() {
+      const email = this.$refs.remail.value;
+      const senha = this.$refs.rsenha.value;
+
+      // clear existing errors
+      this.$store.dispatch(SAIR);
+
+      // set spinner to submit button
+      const submitButton = this.$refs["kt_login_signup_submit"];
+      submitButton.classList.add("spinner", "spinner-light", "spinner-right");
+
+      // dummy delay
+      setTimeout(() => {
+        // send register request
+        this.$store
+          .dispatch(REGISTRAR, {
+            email: email,
+            senha: senha
+          })
+          .then(() => this.$router.push({ name: "dashboard" }));
+
+        submitButton.classList.remove(
+          "spinner",
+          "spinner-light",
+          "spinner-right"
+        );
+      }, 2000);
+    },
+
+    formRegisterInvalid() {
+      Swal.fire({
+        title: "",
+        text: "Please, provide correct data!",
+        icon: "error",
+        confirmButtonClass: "btn btn-secondary",
+        heightAuto: false
+      });
+    },
+
+    formLoginValid() {
+      var email = this.form.email;
+      var senha = this.form.senha;
+
+      // clear existing errors
+      this.$store.dispatch(SAIR);
+
+      // set spinner to submit button
+      const submitButton = this.$refs["kt_login_signin_submit"];
+      submitButton.classList.add("spinner", "spinner-light", "spinner-right");
+
+      // send login request
+      this.$store
+        .dispatch(ENTRAR, { email, senha })
+        // go to which page after successfully login
+        .then(() => this.$router.push({ name: "dashboard" }))
+        .catch(() => {
+          //
         });
+
+      submitButton.classList.remove(
+        "spinner",
+        "spinner-light",
+        "spinner-right"
+      );
+    },
+
+    formLoginInvalid() {
+      Swal.fire({
+        title: "",
+        text: "Por favor, entre com os dados corretamente!",
+        icon: "error",
+        confirmButtonClass: "btn btn-secondary",
+        heightAuto: false
       });
     }
   }

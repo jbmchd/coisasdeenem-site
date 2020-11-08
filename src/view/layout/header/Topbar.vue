@@ -58,9 +58,9 @@ export default {
     // KTDropdownQuickAction,
     // KTDropdownMyCart,
     // KTDropdownLanguage,
-    KTQuickUser,
+    KTQuickUser
     // KTQuickPanel
-  },
+  }
   // methods: {
   //   onLanguageChanged() {
   //     this.languageFlag = this.languages.find(val => {
