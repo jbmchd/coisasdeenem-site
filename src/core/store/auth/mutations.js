@@ -1,4 +1,4 @@
-import TokenService from "@jbmchd-vue/jb-v-global/services/token.service";
+import TokenService from "@jbmchd/jb-v-global/services/token.service";
 
 // mutation types
 export const PURGE_AUTH = "logOut";

@@ -5,7 +5,7 @@ import profile from "./profile.module";
 import rotas from "./rotas";
 import axios from "./axios";
 import menu from "./menu";
-import central_mensagens from "@jbmchd-vue/jb-v-global/store/central_mensagens";
+import central_mensagens from "@jbmchd/jb-v-global/store/central_mensagens";
 
 export default {
   htmlClass,

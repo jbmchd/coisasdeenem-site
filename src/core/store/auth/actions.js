@@ -1,5 +1,5 @@
 import AuthService from "@/core/services/auth.api.service";
-import TokenService from "@jbmchd-vue/jb-v-global/services/token.service";
+import TokenService from "@jbmchd/jb-v-global/services/token.service";
 import {
   PURGE_AUTH,
   SET_AUTH,

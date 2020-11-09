@@ -1,7 +1,7 @@
 import axios from "axios";
 import store from "@/core/store";
-import AxiosService from "@jbmchd-vue/jb-v-global/services/axios.service";
-import ApiAxiosService from "@jbmchd-vue/jb-v-global/services/api.axios.service";
+import AxiosService from "@jbmchd/jb-v-global/services/axios.service";
+import ApiAxiosService from "@jbmchd/jb-v-global/services/api.axios.service";
 
 const axios_interceptor_request_success = config => {
   // Antes da request
