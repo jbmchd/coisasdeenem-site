@@ -45,6 +45,8 @@ const ApiService = {
       axios_interceptor_response_error
     );
 
+    axios.defaults.withCredentials = true;
+
     AxiosService.init();
   }
 };
