@@ -1,6 +1,6 @@
 import Vue from "vue";
 import ApiAxiosService from "./api.axios.service";
-// import ApiAxiosService from "@jbmchd/jb-v-global/services/api.axios.service";
+// import ApiAxiosService from "@jbmchd-vue/jb-v-global/services/api.axios.service";
 
 /**
  * Service to call HTTP request via Axios
