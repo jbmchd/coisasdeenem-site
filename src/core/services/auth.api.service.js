@@ -23,10 +23,10 @@ const AuthService = {
   },
 
   entrar(credentials) {
-    return ApiAxiosService.post(this.getResource("entrar"), credentials);
-    // return axios.get("sanctum/csrf-cookie").then(response => {
-    //   return ApiAxiosService.post(this.getResource("entrar"), credentials);
-    // });
+    // return ApiAxiosService.post(this.getResource("entrar"), credentials);
+    return axios.get("sanctum/csrf-cookie").then(response => {
+      return ApiAxiosService.post(this.getResource("entrar"), credentials);
+    });
   },
 
   sair(token) {
