@@ -1,5 +1,6 @@
 import Vue from "vue";
 import ApiAxiosService from "./api.axios.service";
+import axios from "axios";
 // import ApiAxiosService from "@jbmchd-vue/jb-v-global/services/api.axios.service";
 
 /**
@@ -22,7 +23,9 @@ const AuthService = {
   },
 
   entrar(credentials) {
-    return ApiAxiosService.post(this.getResource("entrar"), credentials);
+    return axios.get("sanctum/csrf-cookie").then(response => {
+      return ApiAxiosService.post(this.getResource("entrar"), credentials);
+    });
   },
 
   sair(token) {

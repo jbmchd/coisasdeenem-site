@@ -1,4 +1,4 @@
-import componentes from "@jbmchd/jb-v-global/componentes";
+import componentes from "@jbmchd/jb-vue-global/componentes";
 
 export default class AppError extends Error {
   constructor(data, ...defaultParams) {

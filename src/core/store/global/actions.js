@@ -1,5 +1,5 @@
 import Nprogress from "nprogress";
-import componentes from "@jbmchd/jb-v-global/componentes";
+import componentes from "@jbmchd/jb-vue-global/componentes";
 
 export default {
   async buscarDadosIniciais({ dispatch, getters }) {
