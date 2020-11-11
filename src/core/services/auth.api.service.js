@@ -24,7 +24,7 @@ const AuthService = {
 
   entrar(credentials) {
     // return ApiAxiosService.post(this.getResource("entrar"), credentials);
-    // axios.defaults.withCredentials = true;
+    axios.defaults.withCredentials = true;
     return axios.get("sanctum/csrf-cookie").then(response => {
       return ApiAxiosService.post(this.getResource("entrar"), credentials);
     });
