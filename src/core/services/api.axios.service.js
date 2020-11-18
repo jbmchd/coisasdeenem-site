@@ -5,6 +5,8 @@ import AxiosService from "@jbmchd/jb-vue-global/services/axios.service";
 const axios_interceptor_request_success = config => {
   // console.log(config);
   // Antes da request
+  // request.headers.set('X-CSRF-TOKEN', CoolApp.csrfToken);
+  // axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
   store.dispatch("axios/incrementar_processos");
   return config;
 };
@@ -38,7 +40,11 @@ const axios_interceptor_response_error = async ({ response }) => {
  */
 const ApiService = {
   ...AxiosService,
+  csrf() {
+    return axios.get("sanctum/csrf-cookie");
+  },
   init() {
+    axios.defaults.withCredentials = true;
     axios.interceptors.request.use(
       axios_interceptor_request_success,
       axios_interceptor_request_error
