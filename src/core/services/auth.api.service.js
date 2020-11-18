@@ -1,7 +1,5 @@
 import Vue from "vue";
 import ApiAxiosService from "./api.axios.service";
-// import axios from "axios";
-// import ApiAxiosService from "@jbmchd-vue/jb-v-global/services/api.axios.service";
 
 /**
  * Service to call HTTP request via Axios
@@ -23,8 +21,7 @@ const AuthService = {
   },
 
   async entrar(credentials) {
-    let result = await this.csrf();
-    // console.log(result, ApiAxiosService);
+    await this.csrf();
     return ApiAxiosService.post(this.getResource("entrar"), credentials);
   },
 
