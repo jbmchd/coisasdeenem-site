@@ -24,7 +24,11 @@ router.beforeEach((to, from, next) => {
   middleware_notification(store);
 
   // Ensure we checked auth before each page load.
-  Promise.all([store.dispatch(EU)]).then(next);
+
+  Promise.all([store.dispatch(EU)]).then(() => {
+    store.dispatch("aplicacaoPronta", true);
+    next();
+  });
 
   // reset config to initial state
   store.dispatch(RESET_LAYOUT_CONFIG);

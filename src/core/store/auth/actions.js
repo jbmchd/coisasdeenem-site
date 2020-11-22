@@ -83,21 +83,26 @@ export default {
   },
 
   [EU]({ dispatch, commit }) {
-    let token = TokenService.getToken();
-    if (token) {
-      AuthService.setAxiosToken(token);
-      AuthService.eu()
-        .then(({ data }) => {
-          commit(SET_EU, data);
-        })
-        .catch(({ data }) => {
-          commit(PURGE_AUTH);
-          commit(SET_ERROR, data);
-          dispatch("flashMessage", { type: "error", ...data });
-        });
-    } else {
-      commit(PURGE_AUTH);
-    }
+    return new Promise((resolve, reject) => {
+      let token = TokenService.getToken();
+      if (token) {
+        AuthService.setAxiosToken(token);
+        AuthService.eu()
+          .then(({ data }) => {
+            commit(SET_EU, data.dados);
+            resolve(data)
+          })
+          .catch(({ data }) => {
+            commit(PURGE_AUTH);
+            commit(SET_ERROR, data);
+            dispatch("flashMessage", { type: "error", ...data });
+            reject(data)
+          });
+      } else {
+        commit(PURGE_AUTH);
+        resolve(true)
+      }
+    });
   },
 
   [ENVIAR_EMAIL_TROCAR_SENHA]({ dispatch, commit }, payload) {

@@ -40,7 +40,6 @@ export default {
     this.$store.dispatch(OVERRIDE_LAYOUT_CONFIG);
 
     this.bloquearSeIE11();
-    this.aplicacaoPronta(true, this.aplicacao_pronta);
   },
   methods: {
     ...mapActions([

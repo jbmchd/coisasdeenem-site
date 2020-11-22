@@ -1,6 +1,6 @@
 let inicio = {
   icon: "flaticon2-expand",
-  text: "Dasboard",
+  text: "Dashboard",
   to: "/dashboard"
 };
 

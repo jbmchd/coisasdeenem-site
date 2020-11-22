@@ -1,0 +1,23 @@
+.brand {
+    background-color: get($idvisual, azul-escuro);
+}
+
+.aside {
+    background-color: get($idvisual, azul) !important;
+}
+
+.aside-menu {
+    background-color: get($idvisual, azul) !important;;
+}
+
+.menu-link {
+    background-color: get($idvisual, azul-escuro) !important;
+}
+
+// .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-heading .menu-text, .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-link .menu-text {
+//     color: black !important;
+// }
+
+.aside-menu .menu-nav > .menu-item.menu-item-active > .menu-heading .menu-icon, .aside-menu .menu-nav > .menu-item.menu-item-active > .menu-link .menu-icon {
+    color: white !important;
+}

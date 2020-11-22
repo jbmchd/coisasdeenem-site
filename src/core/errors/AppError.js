@@ -44,7 +44,6 @@ export default class AppError extends Error {
   }
   getAlertOptions() {
     let error_data = this.get().data;
-    console.log("opa", error_data);
     let alert_data = {
       title: "Ocorreu algum problema",
       html: error_data.message,

@@ -1,0 +1,14 @@
+@import "~nprogress/nprogress.css";
+
+#nprogress .bar {
+    background: get($idvisual, amarelo-escuro);
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px get($idvisual, amarelo-escuro), 0 0 5px get($idvisual, amarelo-escuro); 
+}
+
+#nprogress .spinner-icon {
+    border-top-color: get($idvisual, amarelo-escuro); 
+    border-left-color: get($idvisual, amarelo-escuro); 
+}

@@ -5,9 +5,9 @@
       id="kt_quick_user_toggle"
     >
       <span class="symbol symbol-35 symbol-light-success">
-        <img v-if="false" alt="Pic" :src="currentUserPersonalInfo.photo" />
+        <img v-if="false" alt="Pic" :src="currentUser.photo" />
         <span v-if="true" class="symbol-label font-size-h5 font-weight-bold">
-          {{ currentUserPersonalInfo.name.charAt(0).toUpperCase() }}
+          {{ currentUser.nome.charAt(0).toUpperCase() }}
         </span>
       </span>
     </div>
@@ -22,7 +22,7 @@
         class="offcanvas-header d-flex align-items-center justify-content-between pb-5"
       >
         <h3 class="font-weight-bold m-0">
-          User Profile
+          Área do Usuário
         </h3>
         <a
           href="#"
@@ -42,11 +42,7 @@
         <!--begin::Header-->
         <div class="d-flex align-items-center mt-5">
           <div class="symbol symbol-100 mr-5">
-            <img
-              class="symbol-label"
-              :src="currentUserPersonalInfo.photo"
-              alt=""
-            />
+            <img class="symbol-label" src="/img/usuario-neutro.png" alt="" />
             <i class="symbol-badge bg-success"></i>
           </div>
           <div class="d-flex flex-column">
@@ -54,37 +50,37 @@
               to="/custom-pages/profile"
               class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
             >
-              {{ getFullName }}
+              {{ getName }}
             </router-link>
             <div class="text-muted mt-1">Application Developer</div>
-            <div class="navi mt-2">
+            <!-- <div class="navi mt-2">
               <a href="#" class="navi-item">
                 <span class="navi-link p-0 pb-2">
                   <span class="navi-icon mr-1">
                     <span class="svg-icon svg-icon-lg svg-icon-primary">
-                      <!--begin::Svg Icon-->
+                      
                       <inline-svg
                         src="media/svg/icons/Communication/Mail-notification.svg"
                       />
-                      <!--end::Svg Icon-->
+                      
                     </span>
                   </span>
                   <span class="navi-text text-muted text-hover-primary">
-                    {{ currentUserPersonalInfo.email }}
+                    {{ currentUser.email }}
                   </span>
                 </span>
               </a>
-            </div>
+            </div> -->
             <button class="btn btn-light-primary btn-bold" @click="onLogout">
-              Sign out
+              Sair
             </button>
           </div>
         </div>
         <!--end::Header-->
         <div class="separator separator-dashed mt-8 mb-5"></div>
         <!--begin::Nav-->
-        <div class="navi navi-spacer-x-0 p-0">
-          <!--begin::Item-->
+        <!-- <div class="navi navi-spacer-x-0 p-0">
+          
           <router-link
             to="/builder"
             @click.native="closeOffcanvas"
@@ -95,11 +91,11 @@
               <div class="symbol symbol-40 bg-light mr-3">
                 <div class="symbol-label">
                   <span class="svg-icon svg-icon-md svg-icon-success">
-                    <!--begin::Svg Icon-->
+                    
                     <inline-svg
                       src="media/svg/icons/General/Notification2.svg"
                     />
-                    <!--end::Svg Icon-->
+                    
                   </span>
                 </div>
               </div>
@@ -118,8 +114,8 @@
               </div>
             </div>
           </router-link>
-          <!--end:Item-->
-        </div>
+          
+        </div> -->
         <!--end::Nav-->
         <div class="separator separator-dashed my-7"></div>
       </perfect-scrollbar>
@@ -191,14 +187,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["currentUserPersonalInfo"]),
+    ...mapGetters(["currentUser"]),
 
-    getFullName() {
-      return (
-        this.currentUserPersonalInfo.name +
-        " " +
-        this.currentUserPersonalInfo.surname
-      );
+    getName() {
+      return this.currentUser.nome;
     }
   }
 };

@@ -1,0 +1,9 @@
+.header {
+    background-color: get($idvisual, azul);
+}
+
+.topbar .btn.btn-icon:active, .topbar .btn.btn-icon.active, .topbar .btn.btn-icon:hover, .topbar .btn.btn-icon:focus, .topbar .show .btn.btn-icon.btn-dropdown {
+    // background-color: #282f48 !important;
+    background-color: get($idvisual, azul-escuro) !important;
+}
+

@@ -3,7 +3,8 @@
   <div class="brand flex-column-auto" id="kt_brand" ref="kt_brand">
     <div class="brand-logo">
       <router-link to="/">
-        <img :src="siteLogo()" alt="Logo" />
+        <!-- <img :src="siteLogo()" alt="Logo" /> -->
+        <!-- <div>Coisas de Enem</div> -->
       </router-link>
     </div>
     <div class="brand-tools" v-if="allowMinimize">
@@ -28,6 +29,12 @@
 .aside-toggle {
   outline: none;
 }
+// a {
+//   color:white;
+//   text-transform: uppercase;
+//   font-weight: bolder;
+//   font-size: 1.3em;
+// }
 </style>
 
 <script>

@@ -14,7 +14,6 @@ export default {
       limparFlashMessage: "central_mensagens/limparFlashMessage",
 
       submit: function() {
-        // console.log("botao apertado");
         this.limparFlashMessage(); //① set the flash message
         // this.$router.push({ path: "/" }); //redirect-For notification ②Show
       }
